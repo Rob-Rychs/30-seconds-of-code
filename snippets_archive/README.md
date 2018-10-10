@@ -1,11 +1,7 @@
 ![Logo](/logo.png)
-
 # Snippets Archive
-
 These snippets, while useful and interesting, didn't quite make it into the repository due to either having very specific use-cases or being outdated. However we felt like they might still be useful to some readers, so here they are.
-
 ## Table of Contents
-
 * [`JSONToDate`](#jsontodate)
 * [`speechSynthesis`](#speechsynthesis)
 * [`binarySearch`](#binarysearch)
@@ -14,17 +10,20 @@ These snippets, while useful and interesting, didn't quite make it into the repo
 * [`countVowels`](#countvowels)
 * [`factors`](#factors)
 * [`fibonacciCountUntilNum`](#fibonaccicountuntilnum)
-* [`howManyTimes`](#howmanytimes)
+* [`fibonacciUntilNum`](#fibonacciuntilnum)
+* [`heronArea`](#heronarea)
 * [`httpDelete`](#httpdelete)
 * [`httpPut`](#httpput)
 * [`isArmstrongNumber`](#isarmstrongnumber)
+* [`isSimilar`](#issimilar)
+* [`levenshteinDistance`](#levenshteindistance)
+* [`pipeLog`](#pipelog)
 * [`quickSort`](#quicksort)
 * [`removeVowels`](#removevowels)
 * [`solveRPN`](#solverpn)
-* [`fibonacciUntilNum`](#fibonacciuntilnum)
+* [`howManyTimes`](#howmanytimes)
 
 ---
-
 ### JSONToDate
 
 Converts a JSON object to a date.
@@ -48,7 +47,6 @@ JSONToDate(/Date(1489525200000)/); // "14/3/2017"
 </details>
 
 <br>[⬆ Back to top](#table-of-contents)
-
 
 ### speechSynthesis
 
@@ -78,15 +76,14 @@ speechSynthesis('Hello, World'); // // plays the message
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### binarySearch
 
-Use recursion. Similar to `Array.indexOf()` that finds the index of a value within an array. 
-The difference being this operation only works with sorted arrays which offers a major performance boost due to it's logarithmic nature when compared to a linear search or `Array.indexOf()`.
+Use recursion. Similar to `Array.prototype.indexOf()` that finds the index of a value within an array.
+The difference being this operation only works with sorted arrays which offers a major performance boost due to it's logarithmic nature when compared to a linear search or `Array.prototype.indexOf()`.
 
-Search a sorted array by repeatedly dividing the search interval in half. 
-Begin with an interval covering the whole array. 
-If the value of the search is less than the item in the middle of the interval, recurse into the lower half. Otherwise recurse into the upper half. 
+Search a sorted array by repeatedly dividing the search interval in half.
+Begin with an interval covering the whole array.
+If the value of the search is less than the item in the middle of the interval, recurse into the lower half. Otherwise recurse into the upper half.
 Repeatedly recurse until the value is found which is the mid or you've recursed to a point that is greater than the length which means the value doesn't exist and return `-1`.
 
 ```js
@@ -96,8 +93,8 @@ const binarySearch = (arr, val, start = 0, end = arr.length - 1) => {
   if (arr[mid] > val) return binarySearch(arr, val, start, mid - 1);
   if (arr[mid] < val) return binarySearch(arr, val, mid + 1, end);
   return mid;
-}
-``` 
+};
+```
 
 <details>
 <summary>Examples</summary>
@@ -110,7 +107,6 @@ binarySearch([1, 4, 6, 7, 12, 13, 15, 18, 19, 20, 22, 24], 21); // -1
 </details>
 
 <br>[⬆ Back to top](#table-of-contents)
-
 
 ### cleanObj
 
@@ -144,7 +140,6 @@ cleanObj(testObj, ['a'], 'children'); // { a: 1, children : { a: 1}}
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### collatz
 
 Applies the Collatz algorithm.
@@ -152,7 +147,7 @@ Applies the Collatz algorithm.
 If `n` is even, return `n/2`. Otherwise, return `3n+1`.
 
 ```js
-const collatz = n => (n % 2 == 0 ? n / 2 : 3 * n + 1);
+const collatz = n => (n % 2 === 0 ? n / 2 : 3 * n + 1);
 ```
 
 <details>
@@ -165,7 +160,6 @@ collatz(8); // 4
 </details>
 
 <br>[⬆ Back to top](#table-of-contents)
-
 
 ### countVowels
 
@@ -189,17 +183,16 @@ countVowels('gym'); // 0
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### factors
 
-Returns the array of factors of the given `num`. 
+Returns the array of factors of the given `num`.
 If the second argument is set to `true` returns only the prime factors of `num`.
 If `num` is `1` or `0` returns an empty array.
 If `num` is less than `0` returns all the factors of `-int` together with their additive inverses.
 
-Use `Array.from()`, `Array.map()` and `Array.filter()` to find all the factors of `num`.
-If given `num` is negative, use `Array.reduce()` to add the additive inverses to the array.
-Return all results if `primes` is `false`, else determine and return only the prime factors using `isPrime` and `Array.filter()`.
+Use `Array.from()`, `Array.prototype.map()` and `Array.prototype.filter()` to find all the factors of `num`.
+If given `num` is negative, use `Array.prototype.reduce()` to add the additive inverses to the array.
+Return all results if `primes` is `false`, else determine and return only the prime factors using `isPrime` and `Array.prototype.filter()`.
 Omit the second argument, `primes`, to return prime and non-prime factors by default.
 
 **Note**:- _Negative numbers are not considered prime._
@@ -240,7 +233,6 @@ factors(-12, true); // [2,3]
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### fibonacciCountUntilNum
 
 Returns the number of fibonnacci numbers up to `num`(`0` and `num` inclusive).
@@ -263,27 +255,21 @@ fibonacciCountUntilNum(10); // 7
 
 <br>[⬆ Back to top](#table-of-contents)
 
+### fibonacciUntilNum
 
-### howManyTimes
+Generates an array, containing the Fibonacci sequence, up until the nth term.
 
-Returns the number of times `num` can be divided by `divisor` (integer or fractional) without getting a fractional answer.
-Works for both negative and positive integers.
-
-If `divisor` is `-1` or `1` return `Infinity`.
-If `divisor` is `-0` or `0` return `0`.
-Otherwise, keep dividing `num` with `divisor` and incrementing `i`, while the result is an integer.
-Return the number of times the loop was executed, `i`.
+Create an empty array of the specific length, initializing the first two values (`0` and `1`).
+Use `Array.prototype.reduce()` to add values into the array, using the sum of the last two values, except for the first two.
+Uses a mathematical formula to calculate the length of the array required.
 
 ```js
-const howManyTimes = (num, divisor) => {
-  if (divisor === 1 || divisor === -1) return Infinity;
-  if (divisor === 0) return 0;
-  let i = 0;
-  while (Number.isInteger(num / divisor)) {
-    i++;
-    num = num / divisor;
-  }
-  return i;
+const fibonacciUntilNum = num => {
+  let n = Math.ceil(Math.log(num * Math.sqrt(5) + 1 / 2) / Math.log((Math.sqrt(5) + 1) / 2));
+  return Array.from({ length: n }).reduce(
+    (acc, val, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i),
+    []
+  );
 };
 ```
 
@@ -291,16 +277,39 @@ const howManyTimes = (num, divisor) => {
 <summary>Examples</summary>
 
 ```js
-howManyTimes(100, 2); // 2
-howManyTimes(100, 2.5); // 2
-howManyTimes(100, 0); // 0
-howManyTimes(100, -1); // Infinity
+fibonacciUntilNum(10); // [ 0, 1, 1, 2, 3, 5, 8 ]
 ```
 
 </details>
 
 <br>[⬆ Back to top](#table-of-contents)
 
+### heronArea
+
+Returns the area of a triangle using only the 3 side lengths, Heron's formula. Assumes that the sides define a valid triangle. Does NOT assume it is a right triangle.
+
+More information on what Heron's formula is and why it works available here: https://en.wikipedia.org/wiki/Heron%27s_formula.
+
+Uses `Math.sqrt()` to find the square root of a value.
+
+
+```js
+const heronArea = (side_a, side_b, side_c) => {
+    const p = (side_a + side_b + side_c) / 2
+    return Math.sqrt(p * (p-side_a) * (p-side_b) * (p-side_c))
+  };
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+heronArea(3, 4, 5); // 6
+```
+
+</details>
+
+<br>[⬆ Back to top](#table-of-contents)
 
 ### httpDelete
 
@@ -314,7 +323,7 @@ Omit the third argument, `err` to log the request to the console's error stream 
 ```js
 const httpDelete = (url, callback, err = console.error) => {
   const request = new XMLHttpRequest();
-  request.open("DELETE", url, true);
+  request.open('DELETE', url, true);
   request.onload = () => callback(request);
   request.onerror = () => err(request);
   request.send();
@@ -334,7 +343,6 @@ httpDelete('https://website.com/users/123', request => {
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### httpPut
 
 Makes a `PUT` request to the passed URL.
@@ -347,12 +355,12 @@ Omit the last argument, `err` to log the request to the console's error stream b
 
 ```js
 const httpPut = (url, data, callback, err = console.error) => {
-    const request = new XMLHttpRequest();
-    request.open("PUT", url, true);
-    request.setRequestHeader('Content-type','application/json; charset=utf-8');
-    request.onload = () => callback(request);
-    request.onerror = () => err(request);
-    request.send(data);
+  const request = new XMLHttpRequest();
+  request.open("PUT", url, true);
+  request.setRequestHeader('Content-type','application/json; charset=utf-8');
+  request.onload = () => callback(request);
+  request.onerror = () => err(request);
+  request.send(data);
 };
 ```
 
@@ -370,7 +378,6 @@ httpPut('https://website.com/users/123', data, request => {
 </details>
 
 <br>[⬆ Back to top](#table-of-contents)
-
 
 ### isArmstrongNumber
 
@@ -397,13 +404,112 @@ isArmstrongNumber(56); // false
 
 <br>[⬆ Back to top](#table-of-contents)
 
+### isSimilar
+
+Determines if the `pattern` matches with `str`.
+
+Use `String.toLowerCase()` to convert both strings to lowercase, then loop through `str` and determine if it contains all characters of `pattern` and in the correct order.
+Adapted from [here](https://github.com/forrestthewoods/lib_fts/blob/80f3f8c52db53428247e741b9efe2cde9667050c/code/fts_fuzzy_match.js#L18).
+
+```js
+const isSimilar = (pattern, str) =>
+  [...str].reduce(
+      (matchIndex, char) =>
+          char.toLowerCase() === (pattern[matchIndex] || '').toLowerCase()
+              ? matchIndex + 1
+              : matchIndex,
+      0
+  ) === pattern.length;
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+isSimilar('rt','Rohit'); // true
+isSimilar('tr','Rohit'); // false
+```
+
+</details>
+
+<br>[⬆ Back to top](#table-of-contents)
+
+### levenshteinDistance
+
+Calculates the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) between two strings.
+
+Calculates the number of changes (substitutions, deletions or additions) required to convert `string1` to `string2`. 
+Can also be used to compare two strings as shown in the second example.
+
+``` js
+const levenshteinDistance = (string1, string2) => {
+  if (string1.length === 0) return string2.length;
+  if (string2.length === 0) return string1.length;
+  let matrix = Array(string2.length + 1)
+    .fill(0)
+    .map((x, i) => [i]);
+  matrix[0] = Array(string1.length + 1)
+    .fill(0)
+    .map((x, i) => i);
+  for (let i = 1; i <= string2.length; i++) {
+    for (let j = 1; j <= string1.length; j++) {
+      if (string2[i - 1] === string1[j - 1]) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  return matrix[string2.length][string1.length];
+};
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+levenshteinDistance('30-seconds-of-code','30-seconds-of-python-code'); // 7
+const compareStrings = (string1,string2) => (100 - levenshteinDistance(string1,string2) / Math.max(string1.length,string2.length));
+compareStrings('30-seconds-of-code', '30-seconds-of-python-code'); // 99.72 (%)
+```
+
+</details>
+
+<br>[⬆ Back to top](#table-of-contents)
+
+### pipeLog
+
+Logs a value and returns it.
+
+Use `console.log` to log the supplied value, combined with the `||` operator to return it.
+
+
+
+```js
+const pipeLog = data => console.log(data) || data;
+```
+
+<details>
+<summary>Examples</summary>
+
+```js
+pipeLog(1); // logs `1` and returns `1`
+```
+
+</details>
+
+<br>[⬆ Back to top](#table-of-contents)
 
 ### quickSort
 
 QuickSort an Array (ascending sort by default).
 
-Use recursion. 
-Use `Array.filter` and spread operator (`...`) to create an array that all elements with values less than the pivot come before the pivot, and all elements with values greater than the pivot come after it. 
+Use recursion.
+Use `Array.prototype.filter` and spread operator (`...`) to create an array that all elements with values less than the pivot come before the pivot, and all elements with values greater than the pivot come after it.
 If the parameter `desc` is truthy, return array sorts in descending order.
 
 ```js
@@ -429,16 +535,15 @@ quickSort([4, 1, 3, 2], true); // [4,3,2,1]
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### removeVowels
 
 Returns all the vowels in a `str` replaced by `repl`.
 
-Use `String.replace()` with a regexp to replace all vowels in `str`.
+Use `String.prototype.replace()` with a regexp to replace all vowels in `str`.
 Omot `repl` to use a default value of `''`.
 
 ```js
-const removeVowels = (str, repl = '') => str.replace(/[aeiou]/gi,repl);
+const removeVowels = (str, repl = '') => str.replace(/[aeiou]/gi, repl);
 ```
 
 <details>
@@ -453,15 +558,14 @@ removeVowels("foobAr","*"); // "f**b*r"
 
 <br>[⬆ Back to top](#table-of-contents)
 
-
 ### solveRPN
 
 Solves the given mathematical expression in [reverse polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation).
 Throws appropriate errors if there are unrecognized symbols or the expression is wrong. The valid operators are :- `+`,`-`,`*`,`/`,`^`,`**` (`^`&`**` are the exponential symbols and are same). This snippet does not supports any unary operators.
 
 Use a dictionary, `OPERATORS` to specify each operator's matching mathematical operation.
-Use `String.replace()` with a regular expression to replace `^` with `**`, `String.split()` to tokenize the string and `Array.filter()` to remove empty tokens.
-Use `Array.forEach()` to parse each `symbol`, evaluate it as a numeric value or operator and solve the mathematical expression.
+Use `String.prototype.replace()` with a regular expression to replace `^` with `**`, `String.prototype.split()` to tokenize the string and `Array.prototype.filter()` to remove empty tokens.
+Use `Array.prototype.forEach()` to parse each `symbol`, evaluate it as a numeric value or operator and solve the mathematical expression.
 Numeric values are converted to floating point numbers and pushed to a `stack`, while operators are evaluated using the `OPERATORS` dictionary and pop elements from the `stack` to apply operations.
 
 ```js
@@ -507,22 +611,26 @@ solveRPN('2 3 ^'); // 8
 
 <br>[⬆ Back to top](#table-of-contents)
 
+### howManyTimes
 
-### fibonacciUntilNum
+Returns the number of times `num` can be divided by `divisor` (integer or fractional) without getting a fractional answer.
+Works for both negative and positive integers.
 
-Generates an array, containing the Fibonacci sequence, up until the nth term.
-
-Create an empty array of the specific length, initializing the first two values (`0` and `1`).
-Use `Array.reduce()` to add values into the array, using the sum of the last two values, except for the first two.
-Uses a mathematical formula to calculate the length of the array required.
+If `divisor` is `-1` or `1` return `Infinity`.
+If `divisor` is `-0` or `0` return `0`.
+Otherwise, keep dividing `num` with `divisor` and incrementing `i`, while the result is an integer.
+Return the number of times the loop was executed, `i`.
 
 ```js
-const fibonacciUntilNum = num => {
-  let n = Math.ceil(Math.log(num * Math.sqrt(5) + 1 / 2) / Math.log((Math.sqrt(5) + 1) / 2));
-  return Array.from({ length: n }).reduce(
-    (acc, val, i) => acc.concat(i > 1 ? acc[i - 1] + acc[i - 2] : i),
-    []
-  );
+const howManyTimes = (num, divisor) => {
+  if (divisor === 1 || divisor === -1) return Infinity;
+  if (divisor === 0) return 0;
+  let i = 0;
+  while (Number.isInteger(num / divisor)) {
+    i++;
+    num = num / divisor;
+  }
+  return i;
 };
 ```
 
@@ -530,7 +638,10 @@ const fibonacciUntilNum = num => {
 <summary>Examples</summary>
 
 ```js
-fibonacciUntilNum(10); // [ 0, 1, 1, 2, 3, 5, 8 ]
+howManyTimes(100, 2); // 2
+howManyTimes(100, 2.5); // 2
+howManyTimes(100, 0); // 0
+howManyTimes(100, -1); // Infinity
 ```
 
 </details>

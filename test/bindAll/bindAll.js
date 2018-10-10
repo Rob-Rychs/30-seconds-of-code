@@ -1,8 +1,10 @@
 const bindAll = (obj, ...fns) =>
-fns.forEach(
-fn =>
-(obj[fn] = function() {
-return fn.apply(obj);
-})
-);
-module.exports = bindAll
+  fns.forEach(
+    fn => (
+      (f = obj[fn]),
+      (obj[fn] = function() {
+        return f.apply(obj);
+      })
+    )
+  );
+module.exports = bindAll;
